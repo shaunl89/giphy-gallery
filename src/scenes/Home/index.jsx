@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { isEmpty } from 'lodash';
 import { getGIFS } from '../../services/actions';
 
 class Home extends Component {
+
+  state = {
+    visible: 8,
+  }
 
   handleKeyPress = (event) => {
     event.persist()
@@ -12,8 +17,15 @@ class Home extends Component {
     )
   }
 
+  handleLoadMore = () => {
+    this.setState({
+      visible: this.state.visible + 8
+    })
+  }
+
   render() {
     console.log('results', this.props.Results)
+    const { Results, isLoading } = this.props
     return (
       <div className="container">
         <div align="center" style={{ marginTop: 50 }}>
@@ -23,7 +35,8 @@ class Home extends Component {
               onKeyUp={this.handleKeyPress}
             />
           </form>
-          {this.props.Results.map(({images, url, id}) => {
+          {/* TODO: add isLoading spinner */}
+          {Results.slice(0, this.state.visible).map(({images, url, id}) => {
             return (
               <img
                 src={images.fixed_width.url}
@@ -33,6 +46,16 @@ class Home extends Component {
               />
             )
           })}
+          {!isEmpty(this.props.Results) && !isLoading && !(this.state.visible >= Results.length) ? (
+              <div className="col-12">
+                <button className="btn btn-light mx-auto mt-3 mb-3" onClick={this.handleLoadMore}>Load more</button>
+              </div>
+          ) : null}
+          {!isEmpty(this.props.Results) && !isLoading && (this.state.visible >= Results.length) ? (
+            <div className="col-12">
+              <h6 className="mx-auto mt-3 mb-3">End of Results</h6>
+            </div>
+          ) : null}
         </div>
       </div>
     );

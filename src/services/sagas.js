@@ -11,7 +11,7 @@ const fetchAPI = (value) => {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Accept': 'application/json'
     },
-    url: `${API}search?q=${value}&api_key=${process.env.REACT_APP_API_KEY}&limit=8`,
+    url: `${API}search?q=${value}&api_key=${process.env.REACT_APP_API_KEY}&limit=24`,
   });
 }
 

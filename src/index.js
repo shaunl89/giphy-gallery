@@ -7,7 +7,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import registerServiceWorker from './registerServiceWorker';
 import reducer from './services/reducers';
-import { getGIFS } from './services/sagas';
+import { watcherSaga } from './services/sagas';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import dotenv from 'dotenv';
@@ -30,7 +30,7 @@ const store = createStore(
 );
 
 // run sagas after store creation
-sagaMiddleware.run(getGIFS)
+sagaMiddleware.run(watcherSaga)
 
 ReactDOM.render(
   <Provider store={store}>

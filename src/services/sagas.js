@@ -4,19 +4,22 @@ import Axios from 'axios';
 import * as types from './types';
 import { API } from '../config';
 
-export function* getGIFS() {
+const fetchAPI = (value) => {
+  return Axios({
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': 'application/json'
+    },
+    url: `${API}search?q=${value}&api_key=${process.env.REACT_APP_API_KEY}&limit=8`,
+  });
+}
+
+function* getGIFS(action) {
   try {
     const response = yield call(
-      () => {
-        return Axios({
-          method: 'get',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json'
-          },
-          url: `${API}search?q=cats&api_key=${123}`,
-        });
-      }
+      fetchAPI,
+      action.payload.searchValue,
     )
     yield put ({
       type: types.GET_GIFS_SUCCESS,
@@ -32,6 +35,6 @@ export function* getGIFS() {
   }
 }
 
-export default function* () {
+export function* watcherSaga () {
   yield takeLatest(types.GET_GIFS_REQUEST, getGIFS);
 }

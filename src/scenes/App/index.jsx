@@ -4,7 +4,7 @@ import { StyleRoot } from 'radium';
 import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+// import Footer from '../../components/Footer';
 
 class App extends React.Component {
   render() {
@@ -13,7 +13,7 @@ class App extends React.Component {
         <Header />
           <NotificationContainer />
           {this.props.children}
-        <Footer />
+        {/* <Footer /> */}
       </StyleRoot>
     );
   }

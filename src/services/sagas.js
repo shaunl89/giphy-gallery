@@ -41,6 +41,7 @@ function* addFavourite(action) {
       type: types.ADD_FAVOURITES_SUCCESS,
       payload: action.payload.item,
     })
+    NotificationManager.success('added to favourites')
   } catch (error) {
     console.error(error)
     yield put({
@@ -50,7 +51,24 @@ function* addFavourite(action) {
   }
 }
 
+function* removeFavourite(action) {
+  try {
+    yield put ({
+      type: types.REMOVE_FAVOURITES_SUCCESS,
+      payload: action.payload.item,
+    })
+    NotificationManager.warning('removed from favourites')
+  } catch (error) {
+    console.error(error)
+    yield put({
+      type: types.REMOVE_FAVOURITES_FAILURE,
+      payload: error,
+    })
+  }
+}
+
 export function* watcherSaga () {
   yield takeLatest(types.GET_GIFS_REQUEST, getGIFS)
   yield takeEvery(types.ADD_FAVOURITES_REQUEST, addFavourite)
+  yield takeEvery(types.REMOVE_FAVOURITES_REQUEST, removeFavourite)
 }

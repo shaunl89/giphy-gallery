@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { isEmpty, slice } from 'lodash'
-import { getGIFS, addFavourite } from '../../services/actions'
+import { isEmpty, slice, find } from 'lodash'
+import { getGIFS, addFavourite, removeFavourite } from '../../services/actions'
 // TODO: remove all semicolons
 // TODO: remove all console.logs
 
@@ -25,24 +25,29 @@ class Home extends Component {
   }
 
   favourite = (item) => {
-    this.props.addFavourite(item)
+    console.log(item.id)
+    if (find(this.props.Favourites, item)) {
+      this.props.removeFavourite(item)
+    } else {
+      this.props.addFavourite(item)
+    }
   }
 
   render() {
     console.log('results', this.props.Results)
     console.log('favourites', this.props.Favourites)
-    const { Results, isLoading } = this.props
+    const { Results, noResults, isLoading } = this.props
     return (
       <div className="container">
         <div align="center" style={{ marginTop: 50 }}>
           <form style={{ marginBottom: 20 }}>
             <input
-              placeholder="Search for a GIF!"
+              placeholder="Start searching for images!"
               onKeyUp={this.handleKeyPress}
-              style={{ width: 500, border: 'none', borderBottom: '1px solid', fontSize: 50, outline: 'none' }}
+              // TODO: shrink width when on smaller screen size
+              style={{ width: 600, border: 'none', borderBottom: '1px solid #A9A9A9', fontSize: 40, outline: 'none' }}
             />
           </form>
-          {/* TODO: handle when no gifs are found - add noResults state to redux? */}
           {isLoading ? (
             <i className="fa fa-spinner fa-spin" style={{ marginTop: 80, fontSize: 80 }}></i>
           ) : (
@@ -52,12 +57,15 @@ class Home extends Component {
                   src={images.fixed_width.url}
                   alt={url}
                   key={id}
-                  style={{ width: 250, height: 200, padding: 10, objectFit: 'cover' }}
+                  style={{ width: 250, height: 200, padding: 10, objectFit: 'cover', cursor: 'pointer' }}
                   onClick={() => this.favourite({images, url, id})}
                 />
               )
-            }, this)
+            })
           )}
+          {noResults ? (
+            <p>No results found!</p>
+          ) : null}
           {!isEmpty(this.props.Results) && !isLoading && !(this.state.visible >= Results.length) ? (
               <div className="col-12">
                 <button className="btn btn-light mx-auto mt-3 mb-3" onClick={this.handleLoadMore}>Load more</button>
@@ -78,6 +86,7 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   Results: state.results,
+  noResults: state.noResults,
   isLoading: state.isLoading,
   Favourites: state.favourites,
 })
@@ -85,6 +94,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getGIFS,
   addFavourite,
+  removeFavourite,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

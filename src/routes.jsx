@@ -5,6 +5,7 @@ import Home from './scenes/Home'
 import Favourites from './scenes/Favourites'
 import Application from './Application'
 // TODO: remove Application
+// TODO: 404 page
 
 class Routes extends React.Component {
   render() {

@@ -17,3 +17,12 @@ export function addFavourite(item) {
     },
   }
 }
+
+export function removeFavourite(item) {
+  return {
+    type: types.REMOVE_FAVOURITES_REQUEST,
+    payload: {
+      item,
+    },
+  }
+}

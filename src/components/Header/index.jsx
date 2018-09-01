@@ -8,7 +8,6 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  // NavLink,
 } from 'reactstrap'
 
 class Header extends React.Component {
@@ -27,16 +26,15 @@ class Header extends React.Component {
     return (
       <Navbar color="light" light expand="md">
         <div className="container">
-          <NavbarBrand style={{ color: '#A9A9A9'}}>Galler<b style={{ color: '#696969'}}>easy</b></NavbarBrand>
+          <NavbarBrand style={{ marginRight: 32, color: '#A9A9A9'}}>Galler<b style={{ color: '#696969'}}>easy</b></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            {/* TODO: set active / inactive */}
             <Nav className="mr-auto" navbar>
               <NavItem>
                 <NavLink
                   exact
                   to="/"
-                  style={{ marginLeft: 16, marginRight: 16, color: '#A9A9A9', textDecoration: 'none' }}
+                  style={{ marginRight: 16, color: '#A9A9A9', textDecoration: 'none' }}
                   activeStyle={{ color: '#696969' }}
                 >
                   Search

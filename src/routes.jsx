@@ -1,9 +1,10 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import App from './scenes/App';
-import Home from './scenes/Home';
-import Favourites from './scenes/Favourites';
-import Application from './Application';
+import React from 'react'
+import { Route, Switch } from 'react-router-dom'
+import App from './scenes/App'
+import Home from './scenes/Home'
+import Favourites from './scenes/Favourites'
+import Application from './Application'
+// TODO: remove Application
 
 class Routes extends React.Component {
   render() {
@@ -15,7 +16,7 @@ class Routes extends React.Component {
           <Route exact path="/application" component={Application} />
         </Switch>
       </App>
-    );
+    )
   }
 }
 

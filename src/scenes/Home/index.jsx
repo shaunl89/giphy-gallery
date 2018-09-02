@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { isEmpty, slice, find, debounce } from 'lodash'
 import { getGIFS, addFavourite, removeFavourite } from '../../services/actions'
+import '../App/custom.css'
 // TODO: remove all semicolons
 // TODO: remove all console.logs
 // TODO: add proptypes
@@ -38,10 +39,10 @@ class Home extends Component {
   render() {
     console.log('results', this.props.Results)
     console.log('favourites', this.props.Favourites)
-    const { Results, noResults, isLoading } = this.props
+    const { Results, noResults, Favourites, isLoading } = this.props
     return (
       <div className="container">
-        <div align="center" style={{ marginTop: 50 }}>
+        <div align="center" style={{ marginTop: 30 }}>
           <form style={{ marginBottom: 20 }}>
             <input
               placeholder="Start searching for images!"
@@ -55,13 +56,29 @@ class Home extends Component {
           ) : (
             slice(Results, 0, this.state.visible).map(({images, url, id}) => {
               return (
-                <img
-                  src={images.fixed_width.url}
-                  alt={url}
+                <div
                   key={id}
-                  style={{ width: 250, height: 200, padding: 10, objectFit: 'cover', cursor: 'pointer' }}
-                  onClick={() => this.favourite({images, url, id})}
-                />
+                  className="image-container"
+                  style={{ position: 'relative', display: 'inline-block' }}
+                >
+                  {(find(Favourites, {images, url, id})) ? (
+                    <div>
+                      <span className="fa fa-heart favourite-heart"></span>
+                    </div>
+                  ) : (
+                    <div>
+                      <span className="fa fa-heart hover-heart"></span>
+                    </div>
+                  )}
+                  <div>
+                    <img
+                      src={images.fixed_width.url}
+                      alt={url}
+                      style={{ width: 250, height: 200, margin: 10, objectFit: 'cover', cursor: 'pointer' }}
+                      onClick={() => this.favourite({images, url, id})}
+                    />
+                  </div>
+                </div>
               )
             })
           )}
@@ -70,7 +87,7 @@ class Home extends Component {
           ) : null}
           {!isEmpty(this.props.Results) && !isLoading && !(this.state.visible >= Results.length) ? (
               <div className="col-12">
-                <button className="btn btn-light mx-auto mt-3 mb-3" onClick={this.handleLoadMore}>Load more</button>
+                <button className="btn btn-light mx-auto mt-3 mb-1" onClick={this.handleLoadMore}>Load more</button>
               </div>
           ) : null}
           {!isEmpty(this.props.Results) && !isLoading && (this.state.visible >= Results.length) ? (

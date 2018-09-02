@@ -45,7 +45,7 @@ function* removeFavourite(action) {
       type: types.REMOVE_FAVOURITES_SUCCESS,
       payload: action.payload.item,
     })
-    NotificationManager.warning('removed from favourites')
+    NotificationManager.info('removed from favourites')
   } catch (error) {
     console.error(error)
     yield put({

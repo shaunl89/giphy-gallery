@@ -1,28 +1,18 @@
-import React from 'react';
-
+import React from 'react'
+import styles from './styles'
 class Footer extends React.Component {
   render() {
     return (
-      <div
-        className="bg-light"
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-        }}
-      >
-        <div className="container">
-          <div className="d-inline" style={{ color: "rgba(0, 0, 0, 0.5)" }}>
-            Gallereasy POC web app
-          </div>
-          <div className="d-inline float-right" style={{ color: "rgba(0, 0, 0, 0.5)" }}>
-            2359 Media
-          </div>
+      <div className='fixed-bottom' style={styles.footer}>
+        <div style={styles.footerContentLeft}>
+          Gallereasy POC Web App
+        </div>
+        <div style={styles.footerContentRight}>
+          2359 Media
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Footer;
+export default Footer

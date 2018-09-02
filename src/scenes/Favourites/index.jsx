@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { isEmpty } from 'lodash'
+import { find, isEmpty } from 'lodash'
 import { removeFavourite } from '../../services/actions'
+import styles from './styles'
 
 class Favourites extends Component {
 
@@ -11,32 +12,42 @@ class Favourites extends Component {
 
   render() {
     const { Favourites } = this.props
-    console.log('favourites', Favourites)
     return (
-      <div className="container">
-        <div align="center" style={{ marginTop: 50 }}>
+      <div className='container'>
+        <div className="col-12" align='center' style={{ marginTop: 50, marginBottom: 50 }}>
           <div
-            // TODO: shrink width when on smaller screen size
-            style={{ marginBottom: 20, width: 600, fontSize: 40, outline: 'none', color: 'gray' }}
+            className="col-12"
+            style={styles.title}
           >
             Saved Favourites
           </div>
-            {!isEmpty(Favourites) ? (
-              Favourites.map(({images, url, id}) => {
-                return (
+          {!isEmpty(Favourites) ? (
+            Favourites.map(({images, url, id}) => {
+              return (
+                <div
+                key={id}
+                className="image-container"
+                style={{ position: 'relative', display: 'inline-block' }}
+              >
+                {(find(Favourites, {images, url, id})) ? (
+                  <div>
+                    <span className="fa fa-heart favourite-heart"></span>
+                  </div>
+                ) : null}
+                <div>
                   <img
                     src={images.fixed_width.url}
                     alt={url}
-                    key={id}
-                    style={{ width: 250, height: 200, padding: 10, objectFit: 'cover' }}
+                    style={styles.imageBlock}
                     onClick={() => this.handleClick({images, url, id})}
                   />
-                )
-              })
-            ) : (
-              <p>No favourites saved yet!</p>
-            )
-            }
+                </div>
+              </div>
+              )
+            })
+          ) : (
+            <p style={{ marginTop: 100 }}>No favourites saved yet!</p>
+          )}
         </div>
       </div>
     )

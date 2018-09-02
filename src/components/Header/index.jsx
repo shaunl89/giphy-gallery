@@ -9,7 +9,7 @@ import {
   Nav,
   NavItem,
 } from 'reactstrap'
-
+import styles from './styles'
 class Header extends React.Component {
   state = {
     isOpen: false,
@@ -24,18 +24,20 @@ class Header extends React.Component {
   render() {
     const { Favourites } = this.props
     return (
-      <Navbar color="light" light expand="md">
-        <div className="container">
-          <NavbarBrand style={{ marginRight: 32, color: '#A9A9A9'}}>Galler<b style={{ color: '#696969'}}>easy</b></NavbarBrand>
+      <Navbar color='light' light expand='md'>
+        <div className='container'>
+          <NavbarBrand style={styles.navLogo}>
+            Galler<b style={styles.navLogoBold}>easy</b>
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="mr-auto" navbar>
+            <Nav className='mr-auto' navbar>
               <NavItem>
                 <NavLink
                   exact
-                  to="/"
-                  style={{ marginRight: 16, color: '#A9A9A9', textDecoration: 'none' }}
-                  activeStyle={{ color: '#696969' }}
+                  to='/'
+                  style={{ ...styles.navLink, ...{ marginRight: 16 } }}
+                  activeStyle={styles.navLinkActive}
                 >
                   Search
                 </NavLink>
@@ -43,9 +45,9 @@ class Header extends React.Component {
               <NavItem>
                 <NavLink
                   exact
-                  to="/favourites"
-                  style={{ color: '#A9A9A9', textDecoration: 'none' }}
-                  activeStyle={{ color: '#696969' }}
+                  to='/favourites'
+                  style={styles.navLink}
+                  activeStyle={styles.navLinkActive}
                 >
                   Favourites ({Favourites.length})
                 </NavLink>

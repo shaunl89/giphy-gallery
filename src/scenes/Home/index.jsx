@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { isEmpty, slice, find, debounce } from 'lodash'
+import Radium from 'radium'
 import { getGIFS, addFavourite, removeFavourite } from '../../services/actions'
+import styles from './styles'
 import '../App/custom.css'
-// TODO: remove all semicolons
-// TODO: remove all console.logs
-// TODO: add proptypes
+
 class Home extends Component {
   state = {
     visible: 8,
@@ -28,7 +28,6 @@ class Home extends Component {
   }
 
   favourite = (item) => {
-    console.log(item.id)
     if (find(this.props.Favourites, item)) {
       this.props.removeFavourite(item)
     } else {
@@ -37,22 +36,19 @@ class Home extends Component {
   }
 
   render() {
-    console.log('results', this.props.Results)
-    console.log('favourites', this.props.Favourites)
     const { Results, noResults, Favourites, isLoading } = this.props
     return (
       <div className="container">
-        <div align="center" style={{ marginTop: 30 }}>
-          <form style={{ marginBottom: 20 }}>
+        <div className="col-12" align="center" style={styles.container}>
+          <form style={styles.form}>
             <input
               placeholder="Start searching for images!"
               onKeyUp={this.handleKeyPress}
-              // TODO: shrink width when on smaller screen size
-              style={{ width: 600, border: 'none', borderBottom: '1px solid #A9A9A9', fontSize: 40, outline: 'none' }}
+              style={styles.inputField}
             />
           </form>
           {isLoading ? (
-            <i className="fa fa-spinner fa-spin" style={{ marginTop: 80, fontSize: 80 }}></i>
+            <i className="fa fa-spinner fa-spin" style={styles.spinner}></i>
           ) : (
             slice(Results, 0, this.state.visible).map(({images, url, id}) => {
               return (
@@ -74,7 +70,7 @@ class Home extends Component {
                     <img
                       src={images.fixed_width.url}
                       alt={url}
-                      style={{ width: 250, height: 200, margin: 10, objectFit: 'cover', cursor: 'pointer' }}
+                      style={styles.imageBlock}
                       onClick={() => this.favourite({images, url, id})}
                     />
                   </div>
@@ -83,17 +79,17 @@ class Home extends Component {
             })
           )}
           {noResults ? (
-            <p>No results found!</p>
+            <p style={{ marginTop: 100 }}>No results found!</p>
           ) : null}
           {!isEmpty(this.props.Results) && !isLoading && !(this.state.visible >= Results.length) ? (
               <div className="col-12">
-                <button className="btn btn-light mx-auto mt-3 mb-1" onClick={this.handleLoadMore}>Load more</button>
+                <button className="btn btn-light mx-auto mt-1 mb-5" onClick={this.handleLoadMore}>Load more</button>
               </div>
           ) : null}
           {!isEmpty(this.props.Results) && !isLoading && (this.state.visible >= Results.length) ? (
             <div className="col-12">
               <div>
-                <h6 className="mx-auto mt-3 mb-3" style={{ display: 'inline-block', border: '1px solid grey', padding: 10 }}>End of Results</h6>
+                <h6 className="mx-auto mt-3 mb-5" style={styles.endOfResults}>End of Results</h6>
               </div>
             </div>
           ) : null}
@@ -116,4 +112,4 @@ const mapDispatchToProps = {
   removeFavourite,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Radium(Home))

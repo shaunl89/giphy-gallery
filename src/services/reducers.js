@@ -62,6 +62,6 @@ export default (state = DEFAULT_STATE, action = {}) => {
       isLoading: false,
       error: action.payload,
     }
-    default: return DEFAULT_STATE;
+    default: return DEFAULT_STATE
   }
 }

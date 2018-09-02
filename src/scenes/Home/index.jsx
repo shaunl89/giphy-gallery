@@ -28,7 +28,7 @@ class Home extends Component {
   }
 
   favourite = (item) => {
-    if (find(this.props.Favourites, item)) {
+    if (find(this.props.favourites, item)) {
       this.props.removeFavourite(item)
     } else {
       this.props.addFavourite(item)
@@ -36,28 +36,28 @@ class Home extends Component {
   }
 
   render() {
-    const { Results, noResults, Favourites, isLoading } = this.props
+    const { results, noResults, favourites, isLoading } = this.props
     return (
       <div className="container">
         <div className="col-12" align="center" style={styles.container}>
           <form style={styles.form}>
             <input
               placeholder="Start searching for images!"
-              onKeyUp={this.handleKeyPress}
+              onChange={this.handleKeyPress}
               style={styles.inputField}
             />
           </form>
           {isLoading ? (
             <i className="fa fa-spinner fa-spin" style={styles.spinner}></i>
           ) : (
-            slice(Results, 0, this.state.visible).map(({images, url, id}) => {
+            slice(results, 0, this.state.visible).map(({images, url, id}) => {
               return (
                 <div
                   key={id}
                   className="image-container"
                   style={{ position: 'relative', display: 'inline-block' }}
                 >
-                  {(find(Favourites, {images, url, id})) ? (
+                  {(find(favourites, {images, url, id})) ? (
                     <div>
                       <span className="fa fa-heart favourite-heart"></span>
                     </div>
@@ -81,12 +81,12 @@ class Home extends Component {
           {noResults ? (
             <p style={{ marginTop: 100 }}>No results found!</p>
           ) : null}
-          {!isEmpty(this.props.Results) && !isLoading && !(this.state.visible >= Results.length) ? (
+          {!isEmpty(this.props.results) && !isLoading && !(this.state.visible >= results.length) ? (
               <div className="col-12">
                 <button className="btn btn-light mx-auto mt-1 mb-5" onClick={this.handleLoadMore}>Load more</button>
               </div>
           ) : null}
-          {!isEmpty(this.props.Results) && !isLoading && (this.state.visible >= Results.length) ? (
+          {!isEmpty(this.props.results) && !isLoading && (this.state.visible >= results.length) ? (
             <div className="col-12">
               <div>
                 <h6 className="mx-auto mt-3 mb-5" style={styles.endOfResults}>End of Results</h6>
@@ -100,10 +100,10 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  Results: state.results,
+  results: state.results,
   noResults: state.noResults,
   isLoading: state.isLoading,
-  Favourites: state.favourites,
+  favourites: state.favourites,
 })
 
 const mapDispatchToProps = {

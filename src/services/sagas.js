@@ -1,19 +1,7 @@
 import { put, call, takeLatest, takeEvery } from 'redux-saga/effects'
 import { NotificationManager } from 'react-notifications'
-import Axios from 'axios'
 import * as types from './types'
-import { API } from '../config'
-
-const fetchAPI = (value) => {
-  return Axios({
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json'
-    },
-    url: `${API}search?q=${value}&api_key=${process.env.REACT_APP_API_KEY}&limit=24`,
-  })
-}
+import { fetchAPI } from '../config'
 
 function* getGIFS(action) {
   try {

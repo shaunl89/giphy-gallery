@@ -1,21 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { isEmpty, slice, find } from 'lodash'
+import { isEmpty, slice, find, debounce } from 'lodash'
 import { getGIFS, addFavourite, removeFavourite } from '../../services/actions'
 // TODO: remove all semicolons
 // TODO: remove all console.logs
-
+// TODO: add proptypes
 class Home extends Component {
   state = {
     visible: 8,
   }
 
+  // https://stackoverflow.com/questions/23123138/perform-debounce-in-react-js
+  debounceAPICall = debounce((e) => {
+    this.props.getGIFS(e.target.value)
+  }, 500)
+
   handleKeyPress = (event) => {
     event.persist()
-    setTimeout(
-      () => this.props.getGIFS(event.target.value),
-      500,
-    )
+    this.debounceAPICall(event)
   }
 
   handleLoadMore = () => {

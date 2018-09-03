@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { isEmpty, slice, find, debounce } from 'lodash'
 import Radium from 'radium'
 import { getGIFS, addFavourite, removeFavourite } from '../../services/actions'
+import ImageCube from '../../components/ImageCube'
 import styles from './styles'
 import '../App/custom.css'
 
@@ -18,6 +19,10 @@ class Home extends Component {
 
   handleKeyPress = (event) => {
     event.persist()
+    if (event.charCode === 13) {
+      event.preventDefault()
+      return
+    }
     this.debounceAPICall(event)
   }
 
@@ -27,7 +32,7 @@ class Home extends Component {
     })
   }
 
-  favourite = (item) => {
+  handleClick = (item) => {
     if (find(this.props.favourites, item)) {
       this.props.removeFavourite(item)
     } else {
@@ -43,7 +48,7 @@ class Home extends Component {
           <form style={styles.form}>
             <input
               placeholder="Start searching for images!"
-              onChange={this.handleKeyPress}
+              onKeyPress={this.handleKeyPress}
               style={styles.inputField}
             />
           </form>
@@ -66,14 +71,12 @@ class Home extends Component {
                       <span className="fa fa-heart hover-heart"></span>
                     </div>
                   )}
-                  <div>
-                    <img
-                      src={images.fixed_width.url}
-                      alt={url}
-                      style={styles.imageBlock}
-                      onClick={() => this.favourite({images, url, id})}
-                    />
-                  </div>
+                  <ImageCube
+                    src={images.fixed_width.url}
+                    alt={url}
+                    style={styles.imageBlock}
+                    onClick={() => this.handleClick({images, url, id})}
+                  />
                 </div>
               )
             })

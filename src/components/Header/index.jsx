@@ -20,14 +20,20 @@ class Header extends React.Component {
       isOpen: !this.state.isOpen,
     })
   }
-  
+
   render() {
     const { Favourites } = this.props
     return (
       <Navbar color='light' light expand='md'>
         <div className='container'>
           <NavbarBrand style={styles.navLogo}>
-            Galler<b style={styles.navLogoBold}>easy</b>
+            <NavLink
+              exact
+              to='/'
+              style={styles.navLink}
+            >
+              Galler<b style={styles.navLogoBold}>easy</b>
+            </NavLink>
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

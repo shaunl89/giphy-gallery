@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { find, isEmpty } from 'lodash'
 import { removeFavourite } from '../../services/actions'
+import ImageCube from '../../components/ImageCube'
 import styles from './styles'
 
 class Favourites extends Component {
@@ -34,14 +35,12 @@ class Favourites extends Component {
                     <span className="fa fa-heart favourite-heart"></span>
                   </div>
                 ) : null}
-                <div>
-                  <img
+                  <ImageCube
                     src={images.fixed_width.url}
                     alt={url}
                     style={styles.imageBlock}
                     onClick={() => this.handleClick({images, url, id})}
                   />
-                </div>
               </div>
               )
             })

@@ -18,8 +18,11 @@ REACT_APP_API_KEY=your_api_key
 - Display images in a grid of 8 images by default
 - Add or remove tags to mark or unmark favourite images
 - "Fetch More" button to fetch next 8 image results
-- View all favourite images in a dedicated page
+- View all favourited images in a dedicated page
 - Responsive layout
+
+## Assumptions
+- Global state does not need to be maintained across page refreshes
 
 ## Used in this site
 - [React](https://reactjs.org/) - primary web framework for building user interfaces
@@ -31,9 +34,6 @@ REACT_APP_API_KEY=your_api_key
 - [Lodash](https://lodash.com/) - for simple utility operation
 - [react-notifications](https://www.npmjs.com/package/react-notifications) - for simple UI feedback
 - [GIPHY API](https://developers.giphy.com/) - GIF library
-
-## Assumptions
-- Global state does not need to be maintained across page refreshes
 
 ## Notable Learning Points
 - Debouncing in React https://stackoverflow.com/questions/23123138/perform-debounce-in-react-js
